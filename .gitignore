@@ -12,6 +12,7 @@ __pycache__/
 env/
 build/
 develop-eggs/
+.idea/
 dist/
 eggs/
 lib/
@@ -53,3 +54,5 @@ docs/_build/
 
 # PyBuilder
 target/
+
+ktcal2/doc/build
