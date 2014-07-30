@@ -22,7 +22,7 @@ import os
 #sys.path.insert(0, os.path.abspath('.'))
 base_path = os.path.abspath('.')
 root_path = os.path.abspath('../../.')
-readme_file = os.path.join(os.path.abspath('../../../.'), "README.md")
+readme_file = os.path.join(os.path.abspath('../../../.'), "README.rst")
 index_file_names = []
 for root, dirs, files in os.walk(root_path):
     if any(".py" in x for x in files) and any("__init__.py" in x for x in files):

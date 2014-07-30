@@ -13,9 +13,6 @@ setup(
     scripts=["ktcal2/ktcal2.py"],
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Development Status :: 1 - Beta",
-        "Classifier: Intended Audience :: Other Audience",
-        "Classifier: License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ]
 )
