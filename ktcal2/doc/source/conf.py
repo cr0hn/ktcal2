@@ -22,18 +22,19 @@ import os
 #sys.path.insert(0, os.path.abspath('.'))
 base_path = os.path.abspath('.')
 root_path = os.path.abspath('../../.')
-readme_file = os.path.join(os.path.abspath('../../../.'), "README.rst")
+# readme_file = os.path.join(os.path.abspath('../../../.'), "README.rst")
+readme_file = os.path.join(os.getcwd(), "../../../.", "README.rst")
 index_file_names = []
 for root, dirs, files in os.walk(root_path):
-    if any(".py" in x for x in files) and any("__init__.py" in x for x in files):
+    # Looking for .py files and packages
+    if any(x.endswith(".py") for x in files) and any("__init__.py" in x for x in files):
         sys.path.insert(0, os.path.join(root))
-        print(os.path.join(root))
+
         for f in files:
-            if "__init__" in f:
+            if "__init__" in f or not f.endswith(".py"):
                 continue
 
             f = os.path.join(root, f)
-
             # Create .rst files
             file_name = f.replace(root_path, "").replace(".py", "").replace(os.path.sep, ".")[1:]
             rst_file = "%s.rst" % os.path.join(base_path, file_name)
