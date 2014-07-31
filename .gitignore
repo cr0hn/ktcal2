@@ -56,4 +56,4 @@ docs/_build/
 target/
 
 ktcal2/doc/build
-ktcal2/doc/source/*rst
+#ktcal2/doc/source/*rst
