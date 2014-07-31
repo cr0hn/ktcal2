@@ -7,7 +7,7 @@ The goal of ktcal2 is that it uses new **non-blocking I/O AsyncIO framework**, i
 
 Some links:
 
- - **Documentation:** `<ktcal2.readthedocs.org>`_ (currently not working).
+ - **Documentation:** `<http://ktcal2.readthedocs.org>`_ (currently not working).
  - AsyncSSH: This project use `AsyncSSH <https://github.com/ronf/asyncssh>`_ library internally.
 
 

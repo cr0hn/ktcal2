@@ -31,7 +31,7 @@ __author__ = 'cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel)'
 
 import argparse
 
-from api import *
+from ktcal2.api import *
 
 
 # ----------------------------------------------------------------------
@@ -101,8 +101,8 @@ def main():
     Main function
     """
     import sys
-
-    if sys.version_info >= (3, 4, 0):
+    print(sys.version_info)
+    if sys.version_info <= (3, 4, 0):
         print("\n[!] You need a Python version greater than 3.4\n")
         sys.exit(1)
 

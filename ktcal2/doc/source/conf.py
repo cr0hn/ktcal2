@@ -21,7 +21,8 @@ import os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 base_path = os.getcwd()
-root_path = os.path.join(os.getcwd(), "../../.")
+root_path = os.path.abspath(os.path.join(os.getcwd(), "../../."))
+print(root_path)
 readme_file = os.path.join(os.getcwd(), "../../../.", "README.rst")
 index_file_names = []
 for root, dirs, files in os.walk(root_path):
