@@ -19,17 +19,30 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
-base_path = os.getcwd()
+# sys.path.insert(0, os.path.abspath('.'))
+# base_path = os.getcwd()
+
+# Documents dir
+doc_dir = os.getcwd()
+
+# Base directory
+project_dir = os.path.abspath(os.path.join(os.path.join(os.getcwd()), "../../../."))
+sys.path.insert(0, project_dir)
+
+# Package content
 root_path = os.path.abspath(os.path.join(os.getcwd(), "../../."))
-print(root_path)
-readme_file = os.path.join(os.getcwd(), "../../../.", "README.rst")
+
+# README
+readme_file = os.path.abspath(os.path.join(os.getcwd(), "../../../.", "README.rst"))
+
+# Files found
 index_file_names = []
+
+# Run!
 for root, dirs, files in os.walk(root_path):
     # Looking for .py files and packages
     if any(x.endswith(".py") for x in files) and any("__init__.py" in x for x in files):
         sys.path.insert(0, os.path.join(root))
-
         for f in files:
             if "__init__" in f or not f.endswith(".py"):
                 continue
@@ -37,8 +50,8 @@ for root, dirs, files in os.walk(root_path):
             f = os.path.join(root, f)
             # Create .rst files
             file_name = f.replace(root_path, "").replace(".py", "").replace(os.path.sep, ".")[1:]
-            rst_file = "%s.rst" % os.path.join(base_path, file_name)
-
+            rst_file = "%s.rst" % os.path.join(doc_dir, file_name)
+            # print(rst_file)
             with open(rst_file, "w") as fw:
                 content = (
                     "%s\n"
@@ -49,8 +62,7 @@ for root, dirs, files in os.walk(root_path):
                 ) % (
                     file_name,
                     ("-" * len(file_name)),
-                    file_name.replace("-", ".")
-
+                    file_name
                 )
 
                 fw.write(content)
@@ -58,7 +70,7 @@ for root, dirs, files in os.walk(root_path):
             index_file_names.append(file_name)
 
 # Rewrite index.rst
-with open(os.path.join(base_path, "index.rst"), "w") as f:
+with open(os.path.join(doc_dir, "index.rst"), "w") as f:
 
     # Readme
     f.write("Readme\n^^^^^^\n\n")
