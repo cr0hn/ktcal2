@@ -20,9 +20,8 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
-base_path = os.path.abspath('.')
-root_path = os.path.abspath('../../.')
-# readme_file = os.path.join(os.path.abspath('../../../.'), "README.rst")
+base_path = os.getcwd()
+root_path = os.path.join(os.getcwd(), "../../.")
 readme_file = os.path.join(os.getcwd(), "../../../.", "README.rst")
 index_file_names = []
 for root, dirs, files in os.walk(root_path):
