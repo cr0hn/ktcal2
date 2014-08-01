@@ -22,77 +22,17 @@ import os
 # sys.path.insert(0, os.path.abspath('.'))
 # base_path = os.getcwd()
 
-# Documents dir
-doc_dir = os.getcwd()
+# Source code base directory
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.join(os.getcwd()), "../../."))
 
-# Base directory
-project_dir = os.path.abspath(os.path.join(os.path.join(os.getcwd()), "../../../."))
-sys.path.insert(0, project_dir)
-
-# Package content
-root_path = os.path.abspath(os.path.join(os.getcwd(), "../../."))
-
-# README
-readme_file = os.path.abspath(os.path.join(os.getcwd(), "../../../.", "README.rst"))
-
-# Files found
-index_file_names = []
+# Insert Base project dir
+sys.path.insert(0, os.path.abspath(os.path.join(PROJECT_DIR, "../.")))
 
 # Run!
-for root, dirs, files in os.walk(root_path):
+for root, dirs, files in os.walk(PROJECT_DIR):
     # Looking for .py files and packages
     if any(x.endswith(".py") for x in files) and any("__init__.py" in x for x in files):
         sys.path.insert(0, os.path.join(root))
-        for f in files:
-            if "__init__" in f or not f.endswith(".py"):
-                continue
-
-            f = os.path.join(root, f)
-            # Create .rst files
-            file_name = f.replace(root_path, "").replace(".py", "").replace(os.path.sep, ".")[1:]
-            rst_file = "%s.rst" % os.path.join(doc_dir, file_name)
-            # print(rst_file)
-            with open(rst_file, "w") as fw:
-                content = (
-                    "%s\n"
-                    "%s\n\n"
-                    ".. automodule:: %s\n"
-                    "   :members:\n"
-                    "   :special-members:\n"
-                ) % (
-                    file_name,
-                    ("-" * len(file_name)),
-                    file_name
-                )
-
-                fw.write(content)
-
-            index_file_names.append(file_name)
-
-# Rewrite index.rst
-with open(os.path.join(doc_dir, "index.rst"), "w") as f:
-
-    # Readme
-    f.write("Readme\n^^^^^^\n\n")
-    with open(readme_file, "rU") as readme:
-        for l in readme.readlines():
-            f.write(l)
-
-    # API
-    f.write("\nAPI\n^^^^^^^^^^^^^\n\n")
-    f.write("Content: \n\n\n")
-    f.write(".. toctree::\n\n")
-    for index in index_file_names:
-        f.write("    %s <%s>\n" % (index.replace("_", " "), index))
-
-    f.write("""\nIndices and tables
-^^^^^^^^^^^^^^^^^^
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-""")
-
 
 # sys.path.insert(0, os.path.join(os.path.abspath('../../.'), "lib"))
 
