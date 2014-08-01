@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-ktcal2: 
-"""
+from __future__ import print_function
 
 __license__ = '''Copyright (c) cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel) All rights reserved.
 
@@ -33,31 +31,54 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.'''
 
 __author__ = 'cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel)'
 
-import sys
+
 import os
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
-base_path = os.getcwd()
-sys.path.insert(0, base_path)
-root_path = os.path.abspath(os.path.join(os.getcwd(), "../../."))
-readme_file = os.path.join(os.getcwd(), "../../../.", "README.rst")
-index_file_names = []
-for root, dirs, files in os.walk(root_path):
-    # Looking for .py files and packages
-    if any(x.endswith(".py") for x in files) and any("__init__.py" in x for x in files):
+# --------------------------------------------------------------------------
+# Config
+# --------------------------------------------------------------------------
 
+# Do not process this files/dirs
+EXCLUDE_FILES_OR_DIRS = ["bin"]
+
+# Readme file
+README_FILE_PATH = os.path.abspath(os.path.join(os.getcwd(), "../../.", "README.rst"))
+
+# Documentation base directory
+DOC_DIR = os.path.join(os.getcwd(), "source")
+
+# Source code base directory
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.join(os.getcwd()), "../."))
+
+
+# --------------------------------------------------------------------------
+# Find all .py files
+# --------------------------------------------------------------------------
+
+# Files found
+found_py_files = []
+
+for root, dirs, files in os.walk(PROJECT_DIR):
+
+    # Looking for .py files and packages, not explicitly excluded
+    if any(x.endswith(".py") for x in files) and \
+            any("__init__.py" in x for x in files) and \
+            any(x not in EXCLUDE_FILES_OR_DIRS for x in files):
+
+        # Process each file
         for f in files:
-            if "__init__" in f or not f.endswith(".py"):
+            print(f)
+            if "__init__" in f or not f.endswith(".py"):  # Not process not .py or package maker files
                 continue
 
+            # Get and clean filename path
             f = os.path.join(root, f)
-            # Create .rst files
-            file_name = f.replace(root_path, "").replace(".py", "").replace(os.path.sep, ".")[1:]
-            rst_file = "%s.rst" % os.path.join(base_path, file_name)
+            file_name = f.replace(PROJECT_DIR, "").replace(".py", "").replace(os.path.sep, ".")[1:]
 
+            # Get path in doc path
+            rst_file = "%s.rst" % os.path.join(DOC_DIR, file_name)
+
+            # Write info
             with open(rst_file, "w") as fw:
                 content = (
                               "%s\n"
@@ -73,14 +94,17 @@ for root, dirs, files in os.walk(root_path):
 
                 fw.write(content)
 
-            index_file_names.append(file_name)
+            # Get file path to add in index.rst
+            found_py_files.append(file_name)
 
-# Rewrite index.rst
-with open(os.path.join(base_path, "index.rst"), "w") as f:
+# --------------------------------------------------------------------------
+# Create index.rst
+# --------------------------------------------------------------------------
+with open(os.path.join(DOC_DIR, "index.rst"), "w") as f:
 
     # Readme
     f.write("Readme\n^^^^^^\n\n")
-    with open(readme_file, "rU") as readme:
+    with open(README_FILE_PATH, "rU") as readme:
         for l in readme.readlines():
             f.write(l)
 
@@ -88,9 +112,10 @@ with open(os.path.join(base_path, "index.rst"), "w") as f:
     f.write("\nAPI\n^^^^^^^^^^^^^\n\n")
     f.write("Content: \n\n\n")
     f.write(".. toctree::\n\n")
-    for index in index_file_names:
+    for index in found_py_files:
         f.write("    %s <%s>\n" % (index.replace("_", " "), index))
 
+    # Index
     f.write("""\nIndices and tables
 ^^^^^^^^^^^^^^^^^^
 
