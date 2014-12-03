@@ -99,6 +99,7 @@ def main():
     Main function
     """
     import sys
+
     from .api import GlobalParameters, PasswordConfig, run
 
     if sys.version_info <= (3, 4, 0):
@@ -134,7 +135,7 @@ def main():
                         help='maximum password len')
     group3.add_argument('--min-length', dest='password_min_len', default=1, type=int,
                         help='minimum password len')
-    group3.add_argument('-c', dest='add_low_chars', action="store_true", default=False,
+    group3.add_argument('-c', dest='add_low_chars', action="store_true", default=True,
                         help='use lower case chars in password')
     group3.add_argument('-C', dest='add_upper_chars', action="store_true", default=False,
                         help='use upper case chars in password')
