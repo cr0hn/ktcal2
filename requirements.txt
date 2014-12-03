@@ -1,2 +1,1 @@
-PyCrypto
-asyncssh
+asyncssh-unofficial
