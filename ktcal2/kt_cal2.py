@@ -31,8 +31,6 @@ __author__ = 'cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel)'
 
 import argparse
 
-from ktcal2.api import *
-
 
 # ----------------------------------------------------------------------
 def get_user_list(username, user_wordlist):
@@ -101,10 +99,11 @@ def main():
     Main function
     """
     import sys
-    print(sys.version_info)
+    from .api import GlobalParameters, PasswordConfig, run
+
     if sys.version_info <= (3, 4, 0):
         print("\n[!] You need a Python version greater than 3.4\n")
-        sys.exit(1)
+        exit(1)
 
     parser = argparse.ArgumentParser(description='ktcal2 - SSH brute forcer')
     parser.add_argument('target', metavar='TARGET', nargs='+', help='an integer for the accumulator')
@@ -153,9 +152,8 @@ def main():
     try:
         user_list = get_user_list(args.username, args.user_wordlist)
     except (ValueError, IOError) as e:
-        import sys
         print("[!] Error: ", e)
-        sys.exit(1)
+        exit(1)
 
     # Load password wordlist
     try:
@@ -172,11 +170,9 @@ def main():
                                              max_len=args.password_max_len,
                                              min_len=args.password_min_len)
     except (IOError, ValueError) as e:
-        import sys
         print("[!] Error: ", e)
-        sys.exit(1)
+        exit(1)
 
-    import sys
     f = sys.stderr
 
     # Set global config
@@ -197,10 +193,8 @@ def main():
                                   password_config=password_config
                                   )
     except ValueError as e:
-        import sys
         print("[!] Error: ", e)
-        sys.exit(1)
-
+        exit(1)
     try:
         # Display config
         print(" [*] Starting brute forcer.")
@@ -220,5 +214,13 @@ def main():
         print(" [*] Exiting")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and __package__ is None:
+    import sys
+    import os
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(1, parent_dir)
+    import ktcal2
+    __package__ = str("ktcal2")
+    del sys, os
+
     main()
