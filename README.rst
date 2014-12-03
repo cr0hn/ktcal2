@@ -26,7 +26,7 @@ PIP
 .. code-block:: bash
 
     sudo python3.4 -m pip install ktcal2
-    python3.4 kt-cal2 -h
+    kt-cal2 -h
 
 Manually
 --------
@@ -36,7 +36,6 @@ Manually
     git clone https://github.com/cr0hn/ktcal2.git ktcal2
     cd ktcal2
     sudo python3.4 -m pip -r requirements.txt install
-    cd ktcal2/bin
     python3.4 kt-cal2.py -h
 
 How use it?
