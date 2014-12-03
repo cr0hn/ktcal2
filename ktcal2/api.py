@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.'''
 __author__ = 'cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel)'
 
 
-from ktcal2.lib.data import GlobalParameters, PasswordConfig
-from ktcal2.lib.ssh_brute import ssh_check
+from .lib.data import GlobalParameters, PasswordConfig
+from .lib.ssh_brute import ssh_check
 
 
 # ----------------------------------------------------------------------
