@@ -25,6 +25,7 @@ PIP
 
 .. code-block:: bash
 
+    sudo python3.4 -m pip install PyCrypto
     sudo python3.4 -m pip install ktcal2
     kt-cal2 -h
 
@@ -33,6 +34,7 @@ Manually
 
 .. code-block:: bash
 
+    sudo python3.4 -m pip install PyCrypto
     git clone https://github.com/cr0hn/ktcal2.git ktcal2
     cd ktcal2
     sudo python3.4 -m pip -r requirements.txt install
