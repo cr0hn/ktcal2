@@ -15,7 +15,6 @@ develop-eggs/
 .idea/
 dist/
 eggs/
-lib/
 lib64/
 parts/
 sdist/
