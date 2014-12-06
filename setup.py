@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ktcal2',
-    version='0.1.3',
+    version='0.1.4',
     packages=find_packages(),
     url='https://github.com/cr0hn/ktcal2',
     install_requires=["asyncssh-unofficial"],
