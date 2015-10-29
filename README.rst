@@ -94,7 +94,7 @@ As a library
 .. code-block:: python
 
     from ktcal2.api import run
-    from ktcal2.lib.data import GlobalParameters
+    from ktcal2.lib.data import GlobalParameters, PasswordConfig
         
     def custom_display(message):
         """Displays debug info in a custom way"""
@@ -104,13 +104,14 @@ As a library
     if __name__ == "__main__":
         # Configure password generator, for brute forcer mode.
         password_config = PasswordConfig(low_chars=True,
-                                         numbers=True,
-                                         special=True)
-        
-        # Configure global parameters
-        config = GlobalParameters(target="127.0.0.",
+                                     numbers=True,
+                                     special=True,
+                                     min_len=4,
+                                     max_len=5)
+
+        config = GlobalParameters(target=dst,
                                   verbosity=2,
-                                  
+
                                   # If we wan to display info
                                   display_function=custom_display,
 
@@ -118,8 +119,8 @@ As a library
                                   concurrency=20,
 
                                   # Credentials
-                                  username_list=("root",),
+                                  username_list=("root" for x in range(1)),
                                   password_config=password_config)
         
-        main(config)
+        run(config)
         
