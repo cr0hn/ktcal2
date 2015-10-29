@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='ktcal2',
-    version='0.1.5',
+    version='0.1.6',
     packages=find_packages(),
     url='https://github.com/cr0hn/ktcal2',
-    install_requires=["PyCrypto", "asyncssh==0.8.1"],
+    install_requires=["asyncssh"],
     license='BSD',
     author='cr0hn',
     author_email='cr0hn<-at->cr0hn.com',
