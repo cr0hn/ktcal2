@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import argparse
+
 __license__ = '''Copyright (c) cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel) All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -29,8 +31,6 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.'''
 __author__ = 'cr0hn - cr0hn<-at->cr0hn.com (@ggdaniel)'
 
-import argparse
-
 
 # ----------------------------------------------------------------------
 def get_user_list(username, user_wordlist):
@@ -52,10 +52,10 @@ def get_user_list(username, user_wordlist):
     """
     if username is not None and user_wordlist is not None:
         raise ValueError("Username and user wordlist are not allowed. Select only one.")
-
+    
     if username is None and user_wordlist is None:
         raise ValueError("Username or user wordlist must be specified.")
-
+    
     if username is not None:
         yield username
     else:
@@ -65,7 +65,7 @@ def get_user_list(username, user_wordlist):
                     continue
                 if word.endswith("\n"):
                     word = word[:-1]
-
+                
                 yield word
 
 
@@ -89,7 +89,7 @@ def get_password_list(password_file):
                     continue
                 if word.endswith("\n"):
                     word = word[:-1]
-
+                
                 yield word
 
 
@@ -99,16 +99,16 @@ def main():
     Main function
     """
     import sys
-
+    
     from .api import GlobalParameters, PasswordConfig, run
-
+    
     if sys.version_info <= (3, 4, 0):
         print("\n[!] You need a Python version greater than 3.4\n")
         exit(1)
-
+    
     parser = argparse.ArgumentParser(description='ktcal2 - SSH brute forcer')
     parser.add_argument('target', metavar='TARGET', nargs='+', help='an integer for the accumulator')
-
+    
     # Network options
     group = parser.add_argument_group('Network options')
     group.add_argument('-t', '--max-concurrency', dest='concurrency', default=4, type=int,
@@ -119,7 +119,7 @@ def main():
                        help='remote SSH port. Default 22.')
     group.add_argument('-v', dest='verbosity', default=0, action="count",
                        help='verbosity level: -v, -vv, -vvv.')
-
+    
     # Credentials options
     group2 = parser.add_argument_group('Credentials options')
     group2.add_argument('-u', '--username', dest='username', default="root",
@@ -128,7 +128,7 @@ def main():
                         help='wordlist file with users')
     group2.add_argument('--password-wordlist', dest='password_wordlist', default=None,
                         help='wordlist file with passwords. One per line. Brute force if empty.')
-
+    
     # Password types
     group3 = parser.add_argument_group('Password generation for brute force mode')
     group3.add_argument('--max-length', dest='password_max_len', default=5, type=int,
@@ -145,17 +145,17 @@ def main():
                         help='use symbols -_.;+&%% in password')
     group3.add_argument('-S', dest='add_special_advanced', action="store_true", default=False,
                         help='use symbols \'¿?=)(/$·"!+{}>< in password')
-
+    
     # Parse command line
     args = parser.parse_args()
-
+    
     # Load user wordlist
     try:
         user_list = get_user_list(args.username, args.user_wordlist)
     except (ValueError, IOError) as e:
         print("[!] Error: ", e)
         exit(1)
-
+    
     # Load password wordlist
     try:
         if args.password_wordlist is not None:
@@ -173,21 +173,21 @@ def main():
     except (IOError, ValueError) as e:
         print("[!] Error: ", e)
         exit(1)
-
+    
     f = sys.stderr
-
+    
     # Set global config
     try:
         config = GlobalParameters(target=args.target[0],
                                   verbosity=args.verbosity,
                                   # Only for command line
                                   display_function=f.write,
-
+        
                                   # Net options
                                   concurrency=args.concurrency,
                                   delay=args.delay,
                                   port=args.port,
-
+        
                                   # Credentials
                                   username_list=user_list,
                                   password_list=password_list,
@@ -196,15 +196,17 @@ def main():
     except ValueError as e:
         print("[!] Error: ", e)
         exit(1)
+        
     try:
         # Display config
         print(" [*] Starting brute forcer.")
+        print(" [*] Running attacks with %s workers" % args.concurrency)
         f.write(" [*] Testing... ")
         f.flush()
-
+        
         # Run!
         credentials = run(config)
-
+        
         if credentials is not None:
             print("\n [*] Credentials found!!\n")
             print(" " * 10, ">>  %s:%s  <<\n" % (credentials.user, credentials.password))
@@ -218,10 +220,12 @@ def main():
 if __name__ == "__main__" and __package__ is None:
     import sys
     import os
+    
     parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.insert(1, parent_dir)
     import ktcal2
+    
     __package__ = str("ktcal2")
     del sys, os
-
+    
     main()
