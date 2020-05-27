@@ -10,7 +10,10 @@ Some links:
  - **Documentation:** `<http://ktcal2.readthedocs.org>`_ (currently not working).
  - AsyncSSH: This project use `AsyncSSH <https://github.com/ronf/asyncssh>`_ library internally.
 
+Support this project
+====================
 
+Support this project (to solve issues, new features...) by applying the Github "Sponsor" button.
 
 Licence
 =======
