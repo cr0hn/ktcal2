@@ -9,7 +9,7 @@ setup(
     install_requires=["asyncssh"],
     license='BSD',
     author='cr0hn',
-    author_email='cr0hn<-at->cr0hn.com',
+    author_email='daniel<-at->danielalfocea.com',
     description='SSH brute forcer tool and library, using AsyncIO of Python >= 3.4',
     entry_points={'console_scripts': [
         'kt-cal2 = ktcal2.kt_cal2:main',
